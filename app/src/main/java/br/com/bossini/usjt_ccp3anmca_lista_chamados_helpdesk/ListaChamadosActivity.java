@@ -1,8 +1,11 @@
 package br.com.bossini.usjt_ccp3anmca_lista_chamados_helpdesk;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -12,9 +15,11 @@ import java.util.List;
 public class ListaChamadosActivity extends AppCompatActivity {
 
     private ListView chamadosListView;
+    private static Activity instancia;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instancia = this;
         setContentView(R.layout.activity_lista_chamados);
         chamadosListView = findViewById(R.id.chamadosListView);
         Intent origemIntent =
@@ -24,6 +29,15 @@ public class ListaChamadosActivity extends AppCompatActivity {
         ArrayAdapter <String> adapter =
                 new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chamados);
         chamadosListView.setAdapter(adapter);
+        chamadosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String chamado = chamados.get(position);
+                Intent intent = new Intent (instancia, DetalhesChamadoActivity.class);
+                intent.putExtra("chamado_escolhido", chamado);
+                startActivity(intent);
+            }
+        });
 
     }
 
