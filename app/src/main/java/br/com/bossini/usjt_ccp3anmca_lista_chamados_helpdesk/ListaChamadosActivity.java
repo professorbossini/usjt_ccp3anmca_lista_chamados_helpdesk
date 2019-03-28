@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,22 +17,25 @@ import java.util.List;
 
 public class ListaChamadosActivity extends AppCompatActivity {
 
-    private ListView chamadosListView;
+    private RecyclerView chamadosRecyclerView;
     private static Activity instancia;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         instancia = this;
         setContentView(R.layout.activity_lista_chamados);
-        chamadosListView = findViewById(R.id.chamadosListView);
+        chamadosRecyclerView = findViewById(R.id.chamadosRecyclerView);
+        chamadosRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         Intent origemIntent =
                 getIntent();
         String nomeFila = origemIntent.getStringExtra("nome_fila");
         final List <Chamado> chamados = busca(nomeFila);
-        ChamadoArrayAdapter adapter =
-                new ChamadoArrayAdapter(this, chamados);
-        chamadosListView.setAdapter(adapter);
-        chamadosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*ChamadoArrayAdapter adapter =
+                new ChamadoArrayAdapter(this, chamados);*/
+        ChamadoRecyclerViewAdapter adapter =
+                new ChamadoRecyclerViewAdapter(chamados);
+        chamadosRecyclerView.setAdapter(adapter);
+        /*chamadosRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Chamado chamado = chamados.get(position);
@@ -38,7 +43,7 @@ public class ListaChamadosActivity extends AppCompatActivity {
                 intent.putExtra("chamado_escolhido", chamado);
                 startActivity(intent);
             }
-        });
+        });*/
 
     }
 
