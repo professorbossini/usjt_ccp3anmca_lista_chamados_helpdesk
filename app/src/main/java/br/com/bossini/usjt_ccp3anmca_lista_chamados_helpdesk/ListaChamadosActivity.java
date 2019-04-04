@@ -19,9 +19,11 @@ public class ListaChamadosActivity extends AppCompatActivity {
 
     private RecyclerView chamadosRecyclerView;
     private static Activity instancia;
+    private ChamadoDAO dao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dao = new ChamadoDAO(this);
         instancia = this;
         setContentView(R.layout.activity_lista_chamados);
         chamadosRecyclerView = findViewById(R.id.chamadosRecyclerView);
@@ -29,7 +31,7 @@ public class ListaChamadosActivity extends AppCompatActivity {
         Intent origemIntent =
                 getIntent();
         String nomeFila = origemIntent.getStringExtra("nome_fila");
-        final List <Chamado> chamados = busca(nomeFila);
+        final List <Chamado> chamados = dao.busca(nomeFila);
         /*ChamadoArrayAdapter adapter =
                 new ChamadoArrayAdapter(this, chamados);*/
         ChamadoRecyclerViewAdapter adapter =

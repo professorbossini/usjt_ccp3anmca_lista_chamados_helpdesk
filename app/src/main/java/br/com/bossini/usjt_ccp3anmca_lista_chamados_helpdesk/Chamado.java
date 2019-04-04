@@ -7,11 +7,17 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Chamado implements Serializable {
+    private int id;
     private Fila fila;
     private String descricao;
     private Date dataAbertura;
     private Date dataFechamento;
     private String status;
+
+    public Chamado (int id, Fila f, String d, Date dA, Date dF, String s){
+        this(f, d, dA, dF, s);
+        setId(id);
+    }
 
     public Chamado (Fila f, String d, Date dA, Date dF, String s){
         setFila(f);
@@ -20,6 +26,15 @@ public class Chamado implements Serializable {
         setDataFechamento(dF);
         setStatus(s);
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     public Fila getFila() {
         return fila;
     }
